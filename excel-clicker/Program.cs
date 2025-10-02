@@ -81,36 +81,39 @@ namespace excel_clicker
                 // Bring Excel into focus
                 Console.WriteLine("Bringing Excel into focus");
                 _bringIntoFocus(excelProcess);
-                //h = excelProcess.MainWindowHandle;
-                //SetForegroundWindow(h); // Works if the window is NOT minimized
 
                 // Get the next item in the list
                 SendKeys.SendWait("{DOWN}");
                 Thread.Sleep(1000);
 
-                // Copy contents. For some reason ^C, ^{C}, and ^(C) don't work. Guess it's not capital C, maybe because default is lowercase c?
-                SendKeys.SendWait("^c");
-                Console.WriteLine("Copying contents...");
+                // Copy
+                _copyContents();
 
                 // Bring Edge into focus
                 Console.WriteLine("Bringing Microsoft Edge into focus");
                 _bringIntoFocus(kronosProcess);
-                //k = kronosProcess.MainWindowHandle;
-                //SetForegroundWindow(k); // Works if the window is NOT minimized
 
-
-                // Paste contents into search box
+                // Paste
                 _pasteExcelContents(isim);
 
-                // Open & Close the project
+                // Close
                 _closeProject(isim);
             }
         }
 
+        // Bring the application into focus before taking further actions
         private static void _bringIntoFocus(Process process)
         {
             IntPtr p = process.MainWindowHandle;
             SetForegroundWindow(p);
+        }
+
+        // Copy contents from Excel
+        private static void _copyContents()
+        {
+            // Copy contents. For some reason ^C, ^{C}, and ^(C) don't work. Guess it's not capital C, maybe because default is lowercase c?
+            SendKeys.SendWait("^c");
+            Console.WriteLine("Copying contents...");
         }
 
         // Paste contents into search box. Prerequisite: Activity Name selected
