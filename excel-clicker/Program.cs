@@ -43,94 +43,79 @@ namespace excel_clicker
         {
             Process[] ps = Process.GetProcessesByName("EXCEL"); // Get the name of the process (Task Manager > Details tab)
             Process excelProcess = ps.FirstOrDefault();
-            InputSimulator isim = new InputSimulator(); // Used bc SendKeys.SendWait() doesn't always work
+            InputSimulator isim = new InputSimulator();         // Used bc SendKeys.SendWait() doesn't always work
 
-
-            ///*
-
-            if (excelProcess != null) {
-                // Bring Excel into focus
-                Console.WriteLine("Bringing Excel into focus");
-                IntPtr h = excelProcess.MainWindowHandle;
-                SetForegroundWindow(h); // Works if the window is NOT minimized
-
-                // Copy contents. For some reason ^C, ^{C}, and ^(C) don't work. Guess it's not capital C, maybe because default is lowercase c?
-                SendKeys.SendWait("^c"); 
-                Console.WriteLine("Copying contents...");
-
-            } else {            
-                Console.WriteLine("Couldn't find the Excel application.");
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
-            }
-
-            //*/
-
-            // Next step: Get the Kronos browser
+            // Get the Kronos browser
             Process[] kr = Process.GetProcessesByName("msedge");
             Process kronosProcess = kr.FirstOrDefault();
 
-            if (kronosProcess != null) {
-                // Bring Edge into focus - only whatever the current tab is, does not find Kronos specifically
-                Console.WriteLine("Bringing Microsoft Edge into focus");
-                IntPtr k = kronosProcess.MainWindowHandle;
-                SetForegroundWindow(k); // Works if the window is NOT minimized
-            } else {
+            // Check that both Excel and Edge are open
+            if (excelProcess == null)
+            {
+                Console.WriteLine("Couldn't find the Excel application.");
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+                Environment.Exit(1);
+            }
+
+            if (kronosProcess == null)
+            {
                 Console.WriteLine("Couldn't find an open Microsoft Edge window.");
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
+                Environment.Exit(1);
             }
 
-            ///*
-
-            // Paste contents into search box. Prerequisite: Activity Name selected
-            // Weird error: instead of the project name being copied, `SendKeys.SendWait("^v");*` was copied instead lol
-            copyExcelContents(isim);
-
-            //SendKeys.SendWait("^a");
-            //Thread.Sleep(1000);
-            //SendKeys.SendWait("^v*{TAB}");
-            //Console.WriteLine("Pasting contents...");
-            //isim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
-
-            //*/
-
-
-
-            /********* TODO: Hard coded to leftmost monitor on in-office setup, try to find HTML element *********/
-
-            // Open & Close the project
-            closeProject(isim);
-
-            //// Open project 
-            //isim.Mouse.MoveMouseToPositionOnVirtualDesktop(2000, 27050);
-            //Thread.Sleep(1000);
-            //isim.Mouse.LeftButtonDoubleClick();
-            //Thread.Sleep(1000);
-
-            //// Move mouse to Status dropdown
-            //isim.Mouse.MoveMouseToPositionOnVirtualDesktop(15000, 26000);
-            //Thread.Sleep(1000);
-            //isim.Mouse.LeftButtonClick();
-
-            //// Get Complete option
-            //isim.Mouse.MoveMouseToPositionOnVirtualDesktop(15000, 29000);
-            //Thread.Sleep(1000);
-            //isim.Mouse.LeftButtonClick();
-
-            //// Click Save & Close
-            //isim.Mouse.MoveMouseToPositionOnVirtualDesktop(13000, 38000);
-            //Thread.Sleep(1000);
-            //isim.Mouse.LeftButtonClick();
-
-
-            // Return to the Excel Sheet
-
-
-
+            // Close all projects
+            closeAllProjects(excelProcess, kronosProcess, isim);
+            
         }
 
-        static void copyExcelContents(InputSimulator isim)
+        static void closeAllProjects(Process excelProcess, Process kronosProcess, InputSimulator isim)
+        {
+            IntPtr h = excelProcess.MainWindowHandle;
+            IntPtr k = kronosProcess.MainWindowHandle;
+
+            for (int i = 0; i < 7; i++)
+            {
+                // Bring Excel into focus
+                Console.WriteLine("Bringing Excel into focus");
+                _bringIntoFocus(excelProcess);
+                //h = excelProcess.MainWindowHandle;
+                //SetForegroundWindow(h); // Works if the window is NOT minimized
+
+                // Get the next item in the list
+                SendKeys.SendWait("{DOWN}");
+                Thread.Sleep(1000);
+
+                // Copy contents. For some reason ^C, ^{C}, and ^(C) don't work. Guess it's not capital C, maybe because default is lowercase c?
+                SendKeys.SendWait("^c");
+                Console.WriteLine("Copying contents...");
+
+                // Bring Edge into focus
+                Console.WriteLine("Bringing Microsoft Edge into focus");
+                _bringIntoFocus(kronosProcess);
+                //k = kronosProcess.MainWindowHandle;
+                //SetForegroundWindow(k); // Works if the window is NOT minimized
+
+
+                // Paste contents into search box
+                _pasteExcelContents(isim);
+
+                // Open & Close the project
+                _closeProject(isim);
+            }
+        }
+
+        private static void _bringIntoFocus(Process process)
+        {
+            IntPtr p = process.MainWindowHandle;
+            SetForegroundWindow(p);
+        }
+
+        // Paste contents into search box. Prerequisite: Activity Name selected
+        // Weird error: instead of the project name being copied, `SendKeys.SendWait("^v");*` was copied instead lol
+        private static void _pasteExcelContents(InputSimulator isim)
         {
             SendKeys.SendWait("^a");
             Thread.Sleep(1000);
@@ -139,7 +124,8 @@ namespace excel_clicker
             isim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
         }
 
-        static void closeProject(InputSimulator isim)
+        /********* TODO: Hard coded to leftmost monitor on in-office setup, try to find HTML element *********/
+        private static void _closeProject(InputSimulator isim)
         {
             // Open project 
             isim.Mouse.MoveMouseToPositionOnVirtualDesktop(2000, 27050);

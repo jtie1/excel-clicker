@@ -15,3 +15,4 @@ C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net9.0-windows\ref\excel-c
 C:\source\repos\excel-clicker\excel-clicker\bin\Debug\net9.0-windows\WindowsInput.dll
 C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net9.0-windows\excel-clicker.csproj.AssemblyReference.cache
 C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net9.0-windows\excel-cl.85C15089.Up2Date
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net9.0-windows\excel-clicker.sourcelink.json
