@@ -1,0 +1,14 @@
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\excel-clicker.GeneratedMSBuildEditorConfig.editorconfig
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\excel-clicker.AssemblyInfoInputs.cache
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\excel-clicker.AssemblyInfo.cs
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\excel-clicker.csproj.CoreCompileInputs.cache
+C:\source\repos\excel-clicker\excel-clicker\bin\Debug\net8.0\excel-clicker.exe
+C:\source\repos\excel-clicker\excel-clicker\bin\Debug\net8.0\excel-clicker.deps.json
+C:\source\repos\excel-clicker\excel-clicker\bin\Debug\net8.0\excel-clicker.runtimeconfig.json
+C:\source\repos\excel-clicker\excel-clicker\bin\Debug\net8.0\excel-clicker.dll
+C:\source\repos\excel-clicker\excel-clicker\bin\Debug\net8.0\excel-clicker.pdb
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\excel-clicker.dll
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\refint\excel-clicker.dll
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\excel-clicker.pdb
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\excel-clicker.genruntimeconfig.cache
+C:\source\repos\excel-clicker\excel-clicker\obj\Debug\net8.0\ref\excel-clicker.dll
