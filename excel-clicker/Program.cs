@@ -1,20 +1,9 @@
 ﻿using System.Runtime.InteropServices;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Runtime.CompilerServices;
-using System.Reflection.Metadata;
 using WindowsInput;
 using WindowsInput.Native;
 
-//using WindowsInput;
-//using WindowsInput.Native;
 
 namespace excel_clicker
 {
@@ -73,10 +62,7 @@ namespace excel_clicker
 
         static void closeAllProjects(Process excelProcess, Process kronosProcess, InputSimulator isim)
         {
-            IntPtr h = excelProcess.MainWindowHandle;
-            IntPtr k = kronosProcess.MainWindowHandle;
-
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 10; i++)
             {
                 // Bring Excel into focus
                 Console.WriteLine("Bringing Excel into focus");

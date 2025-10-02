@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("excel-clicker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+018ed10258865b9b82b9a34045f915e2a87b09f0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27e830f4c87c327550c07882f203b78897416477")]
 [assembly: System.Reflection.AssemblyProductAttribute("excel-clicker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("excel-clicker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
