@@ -56,13 +56,14 @@ namespace excel_clicker
             }
 
             // Close all projects
-            closeAllProjects(excelProcess, kronosProcess, isim);
+            //closeAllProjects(excelProcess, kronosProcess, isim);
+            close2ndLineProjects(excelProcess, kronosProcess, isim);
             
         }
 
         static void closeAllProjects(Process excelProcess, Process kronosProcess, InputSimulator isim)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 30; i++)
             {
                 // Bring Excel into focus
                 Console.WriteLine("Bringing Excel into focus");
@@ -87,11 +88,41 @@ namespace excel_clicker
             }
         }
 
+        // Some projects have multiple function codes. This takes care of the second function code
+        // TODO: hard coded to positions on the screen. see if it can be dynamic
+        static void close2ndLineProjects(Process excelProcess, Process kronosProcess, InputSimulator isim)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                // Bring Excel into focus
+                Console.WriteLine("Bringing Excel into focus");
+                _bringIntoFocus(excelProcess);
+
+                // Get the next item in the list
+                SendKeys.SendWait("{DOWN}");
+                Thread.Sleep(1000);
+
+                // Copy
+                _copyContents();
+
+                // Bring Edge into focus
+                Console.WriteLine("Bringing Microsoft Edge into focus");
+                _bringIntoFocus(kronosProcess);
+
+                // Paste
+                _pasteExcelContents(isim);
+
+                // Close
+                _close2ndLine(isim);
+            }
+        }
+
         // Bring the application into focus before taking further actions
         private static void _bringIntoFocus(Process process)
         {
             IntPtr p = process.MainWindowHandle;
             SetForegroundWindow(p);
+            Thread.Sleep(1000);
         }
 
         // Copy contents from Excel
@@ -108,7 +139,7 @@ namespace excel_clicker
         {
             SendKeys.SendWait("^a");
             Thread.Sleep(1000);
-            SendKeys.SendWait("^v*{TAB}");
+            SendKeys.SendWait("^v*"); // removed {TAB}
             Console.WriteLine("Pasting contents...");
             isim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
         }
@@ -137,5 +168,30 @@ namespace excel_clicker
             Thread.Sleep(1000);
             isim.Mouse.LeftButtonClick();
         }
+
+        private static void _close2ndLine(InputSimulator isim)
+        {
+            // Open project 
+            isim.Mouse.MoveMouseToPositionOnVirtualDesktop(2000, 28750);
+            Thread.Sleep(1000);
+            isim.Mouse.LeftButtonDoubleClick();
+            Thread.Sleep(1000);
+
+            // Move mouse to Status dropdown
+            isim.Mouse.MoveMouseToPositionOnVirtualDesktop(15000, 26000);
+            Thread.Sleep(1000);
+            isim.Mouse.LeftButtonClick();
+
+            // Get Complete option
+            isim.Mouse.MoveMouseToPositionOnVirtualDesktop(15000, 29000);
+            Thread.Sleep(1000);
+            isim.Mouse.LeftButtonClick();
+
+            // Click Save & Close
+            isim.Mouse.MoveMouseToPositionOnVirtualDesktop(13000, 38000);
+            Thread.Sleep(1000);
+            isim.Mouse.LeftButtonClick();
+        }
+
     }
 }
